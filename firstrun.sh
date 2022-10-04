@@ -71,24 +71,6 @@ XKBOPTIONS=""
 KBEOF
 dpkg-reconfigure -f noninteractive keyboard-configuration
 
-#Disable Bluetooth service
-systemctl disable bluetooth.service
-
-echo '-------------------------------'
-echo 'Updating software'
-echo '-------------------------------'
-#Update software repositories and do full upgrade
-apt update
-apt full-upgrade -y
-
-#Install matchbox keyboard for onscreen keyboard support
-apt install -y matchbox-keyboard
-
-#Add Google Chrome repository and install Chrome unstable
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-apt install -y google-chrome-stable google-chrome-beta google-chrome-unstable
-
 #Remove first run script and remove reference to script in /boot/cmdline.txt
 rm -f /boot/firstrun.sh
 sed -i 's| systemd.run.*||g' /boot/cmdline.txt
